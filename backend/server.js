@@ -25,11 +25,23 @@ const limiter = rateLimit({
 // Middleware
 app.use(helmet());
 app.use(limiter);
+
+// Handle preflight requests
+app.options('*', cors());
+
+// CORS configuration
 app.use(cors({
-  origin: true, // Allow all origins temporarily
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow all origins
+    return callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
