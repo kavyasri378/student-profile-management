@@ -5,7 +5,6 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
 import newAuthRoutes from './routes/newAuth.js';
-import profileRoutes from './routes/profile.js';
 import studentRoutes from './routes/students.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -37,7 +36,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', newAuthRoutes);
-app.use('/api/profile', profileRoutes);
 app.use('/api/students', studentRoutes);
 
 // Health check
