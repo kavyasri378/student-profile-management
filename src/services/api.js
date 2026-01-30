@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: 'https://student-profile-management-6k06.onrender.com/api',
   timeout: 30000, // Increased to 30 seconds for Render wake-up time
   headers: {
     'Content-Type': 'application/json',
