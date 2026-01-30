@@ -1,5 +1,5 @@
 import User from '../models/User.js';
-import { generateToken } from '../utils/jwtUtils.js';
+import jwt from 'jsonwebtoken';
 
 // Simple, clean registration
 export const register = async (req, res, next) => {
@@ -28,7 +28,7 @@ export const register = async (req, res, next) => {
     console.log('✅ User created:', user.email);
 
     // Generate token
-    const token = generateToken(user._id);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(201).json({
       success: true,
@@ -87,7 +87,7 @@ export const login = async (req, res, next) => {
     console.log('✅ Login successful:', user.email);
 
     // Generate token
-    const token = generateToken(user._id);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(200).json({
       success: true,
